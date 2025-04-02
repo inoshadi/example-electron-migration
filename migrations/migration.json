@@ -1,0 +1,8 @@
+[
+    "20250308150001_create_users",
+    "20250308150002_create_roles",
+    "20250308150003_create_permissions",
+    "20250308150004_create_user_has_roles",
+    "20250308150005_create_role_has_permissions",
+    "20250308150006_create_user_has_permissions"
+]
