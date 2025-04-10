@@ -3,7 +3,7 @@
   "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
   "appId": "com.inoshadi.ExampleMysqlMigration",
   "asar": true,
-  "productName": "Example Mysql DB Migration",
+  "productName": "Example Electron DB Migration",
   "icon": "electron/icons/JT-logo-512",
   "directories": {
     "output": "release/${version}"
@@ -15,9 +15,15 @@
   ],
   "mac": {
     "target": [
-      "dmg"
+      {
+        "target": "dmg",
+        "arch": [
+          "x64",
+          "arm64"
+        ]
+      }
     ],
-    "artifactName": "${productName}-Mac-${version}-Installer.${ext}"
+    "artifactName": "${productName}-Mac-${arch}-${version}-Installer.${ext}"
   },
   "win": {
     "target": [
@@ -28,7 +34,7 @@
         ]
       }
     ],
-    "artifactName": "${productName}-Windows-${version}-Setup.${ext}"
+    "artifactName": "${productName}-Windows-${arch}-${version}-Setup.${ext}"
   },
   "nsis": {
     "oneClick": false,

@@ -1,13 +1,16 @@
 {
   "name": "example-electron-migration",
-  "productName": "Example Mysql DB Migration",
+  "productName": "Example Electron DB Migration",
   "private": true,
   "version": "0.0.1",
-  "description": "Mysql DB Migration and Tools Example: Define ACL Tables",
+  "description": "Electron App for Mysql DB Migration and Tools Example: Define ACL Tables",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && electron-builder",
+    "build-mac": "tsc && vite build && electron-builder --mac",
+    "build-win": "tsc && vite build && electron-builder --win",
+    "build-linux": "tsc && vite build && electron-builder --linux",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "key:generate": "node --loader ts-node/esm bin/key-generate.ts"
