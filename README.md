@@ -2,9 +2,12 @@
 Use Case: Migrate ACL Tables
 
 ## About
-Created based on [Electron Vite](https://electron-vite.github.io/) you may want to [See Electron Vite Generated Readme](ELECTRON_VITE_README.md), with React, [read documentation here](https://react.dev/reference/react), Tailwindcss [read about Tailwindcss](https://tailwindcss.com/docs/), and DaisyUI [learn more](https://daisyui.com/docs/intro/)
-
 This package contains DB migration for Basic ACL tables. Provides migration and rollback features.
+
+Created based on [Electron Vite](https://electron-vite.github.io/) you may want to [See Electron Vite Generated Readme](ELECTRON_VITE_README.md).  
+Use React, [read documentation here](https://react.dev/reference/react),  
+Tailwindcss [read about Tailwindcss](https://tailwindcss.com/docs/),  
+and DaisyUI [learn more](https://daisyui.com/docs/intro/)  
 
 ## What's inside
 ```JAVASCRIPT
@@ -50,6 +53,10 @@ This package contains DB migration for Basic ACL tables. Provides migration and 
     "vite-plugin-node-polyfills": "^0.23.0"
   }
 ```
+
+### Update Packages
+> [!NOTE]
+> This package uses the latest stable version of `sequelize` when the code was written, which is the `"sequelize": "^6.37.7"` version, read documentation [here](https://sequelize.org/docs/v6/).
 
 ## Install
 - Clone repository
@@ -263,7 +270,7 @@ This command will helps you to make a pair of a migration entry and a javascript
 
 ## App Theme
 This package utilize the theme support from DaisyUI. [Learn more](https://daisyui.com/docs/themes/)
-- Use predefined `corporate` theme
+- Use built-in `corporate` theme
   ```HTML
   <!-- file index.html -->
   <!doctype html>
@@ -273,7 +280,7 @@ This package utilize the theme support from DaisyUI. [Learn more](https://daisyu
    </html>
   ```
   Put your theme name as the value of the `data-theme` attribute e.g. `<html data-theme="your-theme" ...>`
-- You need to active the theme support. See [`src/app/index.css`](src/app/index.css)
+- You need to activate the theme support. See [`src/app/index.css`](src/app/index.css)
   ```CSS
   @import "tailwindcss";
 

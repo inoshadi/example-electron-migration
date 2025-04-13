@@ -4,6 +4,7 @@
   "private": true,
   "version": "0.0.1",
   "description": "Electron App for Mysql DB Migration and Tools Example: Define ACL Tables",
+  "author": "Sutrisno Hadi <inoshadi@gmail.com> (https://github.com/inoshadi)",
   "type": "module",
   "scripts": {
     "dev": "vite",
