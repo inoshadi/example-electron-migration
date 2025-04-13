@@ -2,13 +2,13 @@ import fs from 'node:fs';
 import crypto from 'node:crypto';
 
 try {
-    var data = await fs.readFileSync('.env', 'utf8');
+    var data = fs.readFileSync('.env', 'utf8');
     // console.log(data);
 } catch (err) {
     fs.copyFileSync('.env.example', '.env');
     console.log('.env was created.');
 }
-data = await fs.readFileSync('.env', 'utf8');
+data = fs.readFileSync('.env', 'utf8');
 
 const appkey = crypto.randomBytes(32).toString('hex');
 const appkeyline = 'VITE_APP_KEY="' + appkey + '"';

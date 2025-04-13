@@ -1316,6 +1316,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/dateformat@npm:^5":
+  version: 5.0.3
+  resolution: "@types/dateformat@npm:5.0.3"
+  checksum: 10c0/828452c096b0b6901a64ce1f3a47fb96755f2451a2605b59fb271407526c62020d171aab6946f9268ca5a4d63db7952c32595bf30b49ed54b218414ec6a02261
+  languageName: node
+  linkType: hard
+
 "@types/debug@npm:^4.1.6, @types/debug@npm:^4.1.8":
   version: 4.1.12
   resolution: "@types/debug@npm:4.1.12"
@@ -2593,6 +2600,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dateformat@npm:^5.0.3":
+  version: 5.0.3
+  resolution: "dateformat@npm:5.0.3"
+  checksum: 10c0/ccc7a5351080f7ae00496e246ed4d3afdba770f9a8267348d0d04387e23414ef219d9bb6f273a6d628c0ff5f0255ab75977d668dc7ab066b916a196950bdde9a
+  languageName: node
+  linkType: hard
+
 "debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.3, debug@npm:^4.3.4":
   version: 4.4.0
   resolution: "debug@npm:4.4.0"
@@ -3285,6 +3299,7 @@ __metadata:
   resolution: "example-electron-migration@workspace:."
   dependencies:
     "@tailwindcss/vite": "npm:^4.0.17"
+    "@types/dateformat": "npm:^5"
     "@types/node": "npm:^22.13.14"
     "@types/react": "npm:^19.0.12"
     "@types/react-dom": "npm:^19.0.4"
@@ -3292,6 +3307,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^8.29.0"
     "@vitejs/plugin-react": "npm:^4.3.4"
     daisyui: "npm:^5.0.9"
+    dateformat: "npm:^5.0.3"
     dotenv: "npm:^16.4.7"
     dotenv-expand: "npm:^12.0.1"
     electron: "npm:^35.1.2"
