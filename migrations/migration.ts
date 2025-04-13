@@ -217,7 +217,7 @@ class Migration {
             try {
                 mods[i] = await this.getModule(mgr)
                 const sql = await mods[i].getUpSql()
-                msg.push(sql.replace("\n", ""))
+                msg.push(sql)
                 await mods[i].up()
                 msg.push("........Done.")
                 // console.log(mods)
