@@ -26,18 +26,18 @@ class CreateRoles {
     // public methods
     async up() {
         //
-        return await this.sequelize.query(this.getUpSql().replace("\n", ""))
+        return await this.sequelize.query(this.getUpSql().replaceAll("\n", ""))
     }
     async down() {
         // 
-        return await this.sequelize.query(this.getDownSql().replace("\n", ""))
+        return await this.sequelize.query(this.getDownSql().replaceAll("\n", ""))
     }
 
     getUpSql() {
-        return this.constructor.upSql.replace(":tablename", this.table)
+        return this.constructor.upSql.replaceAll(":tablename", this.table)
     }
     getDownSql() {
-        return this.constructor.downSql.replace(":tablename", this.table)
+        return this.constructor.downSql.replaceAll(":tablename", this.table)
     }
 
 }
