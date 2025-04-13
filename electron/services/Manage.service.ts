@@ -112,54 +112,6 @@ export default function ManageService(win: Electron.BrowserWindow) {
         return await migration.getMigrationInfo(name)
     })
 
-    ipcMain.handle('migratex', async (_ev, name: string) => {
-
-        win.webContents.send('manage:log-message', "Start Migration: " + name + " ...")
-        const sequelize = await getAppSequelize(win)
-        const connection = await getConnectionInfo(win)
-        const migration = new Migration(sequelize, connection.prefix)
-        const exists = await migration.exists(name)
-        if (!exists)
-            return win.webContents.send('manage:log-message', "Migration: " + name + " doesn't exists.")
-
-        const executed = await migration.executed(name)
-        if (executed)
-            return win.webContents.send('manage:log-message', "Migration: " + name + " has been executed.")
-        let mod: any
-        try {
-            mod = await migration.getModule(name)
-        } catch (error) {
-            const msg = "Migration: " + name + " has been failed. Migration module not found."
-            const consoleMsg = [msg, error]
-            win.webContents.send('alert-message', msg)
-            win.webContents.send('console-log-message', inspect(consoleMsg))
-            return win.webContents.send('manage:log-message', inspect(consoleMsg))
-        }
-        try {
-            const [_up, _metaup] = await mod.up()
-        }
-        catch (error) {
-            const msg = "Migration: " + name + " has been failed. Check your SQL migration script."
-            const consoleMsg = [msg, error]
-            win.webContents.send('alert-message', msg)
-            win.webContents.send('console-log-message', inspect(consoleMsg))
-            return win.webContents.send('manage:log-message', inspect(consoleMsg))
-        }
-        let response = "\\Migration: " + name + " has been executed.\n \\--------------------- \n" + mod.getUpSql() + "\n \\---------------------"
-        try {
-            const [_res, _meta] = await migration.setMigration(name, mod.table, mod.action)
-            // console.log(_up, _metaup)
-        } catch (error) {
-            win.webContents.send('alert-message', "Success executing migration, but failed to record.")
-            win.webContents.send('console-log-message', inspect([response, error]))
-            return win.webContents.send('manage:log-message', inspect([response, error]))
-        }
-
-        // success
-        return win.webContents.send('manage:log-message', response)
-
-    })
-
     ipcMain.handle('migrate', async (_ev, name: string) => {
         let msg: any[] = []
         const msgName: string = name.length > 0 ? name : " all to the latest."
