@@ -7,7 +7,7 @@ Created based on [Electron Vite](https://electron-vite.github.io/) you may want 
 This package contains DB migration for Basic ACL tables. Provides migration and rollback features.
 
 ## What's inside
-```json
+```JAVASCRIPT
   // dependencies
   {
     "mysql2": "^3.14.0",
@@ -20,6 +20,7 @@ This package contains DB migration for Basic ACL tables. Provides migration and 
   // devDevepencies
   {
     "@tailwindcss/vite": "^4.0.17",
+    "@types/dateformat": "^5",
     "@types/node": "^22.13.14",
     "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
@@ -27,6 +28,7 @@ This package contains DB migration for Basic ACL tables. Provides migration and 
     "@typescript-eslint/parser": "^8.29.0",
     "@vitejs/plugin-react": "^4.3.4",
     "daisyui": "^5.0.9",
+    "dateformat": "^5.0.3",
     "dotenv": "^16.4.7",
     "dotenv-expand": "^12.0.1",
     "electron": "^35.1.2",
@@ -51,8 +53,16 @@ This package contains DB migration for Basic ACL tables. Provides migration and 
 
 ## Install
 - Clone repository
+  ```BASH
+  git clone https://github.com/inoshadi/example-electron-migration.git
   ```
-  git clone 
+  or
+  ```BASH
+  git clone git@github.com:inoshadi/example-electron-migration.git
+  ```
+  using GitHub CLI
+  ```BASH
+  gh repo clone inoshadi/example-electron-migration
   ```
 - Install packages
   ```
@@ -62,7 +72,7 @@ This package contains DB migration for Basic ACL tables. Provides migration and 
   ```
   yarn key:generate 
   ```
-  This command will generate ``VITE_APP_KEY`` and copy ``.env.example`` file to ``.env`` accordingly.
+  This command will generate `VITE_APP_KEY` and copy `.env.example` file to `.env` accordingly.
 
 ## Setup environtments
 - Open file ``.env``
@@ -83,7 +93,7 @@ This package contains DB migration for Basic ACL tables. Provides migration and 
 ## Build
 - ``yarn build``
 - This command will build a release package according to your machine
-- You can find your app installer within release directory
+- You can find your app installer within `release` directory
   - macOS
   - ``/release/[app-version]/${productName}-Mac-arm64-${version}-Installer.dmg``
   - ``/release/[app-version]/${productName}-Mac-x64-${version}-Installer.dmg``
@@ -101,7 +111,7 @@ This package contains DB migration for Basic ACL tables. Provides migration and 
   - ``yarn build-linux``
 
 ## Available commands
-  ```json
+  ```BASH
   {
   ...
     "scripts": {
@@ -112,7 +122,10 @@ This package contains DB migration for Basic ACL tables. Provides migration and 
       "build-linux": "tsc && vite build && electron-builder --linux",
       "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
       "preview": "vite preview",
-      "key:generate": "node --loader ts-node/esm bin/key-generate.ts"
+      "key:generate": "yarn ts-node-import bin/key-generate.ts",
+      "migrate:make": "yarn ts-node-import bin/migration-make.ts",
+      "ts-node-import": "node --import 'data:text/javascript,import { register } from \"node:module\"; import { pathToFileURL } from \"node:url\"; register(\"ts-node/esm\", pathToFileURL(\"./\"));'"
+  
     },
   ...
   }
@@ -120,7 +133,7 @@ This package contains DB migration for Basic ACL tables. Provides migration and 
   
 ## Create your own migration scripts
 ### Migration path
-- All migration scripts stored at ``migrations/`` directory
+- All migration scripts stored at [`migrations/`](migrations) directory
   ```
     migrations/
     ├── 20250308150001_create_users.js   // migration scripts
@@ -129,8 +142,8 @@ This package contains DB migration for Basic ACL tables. Provides migration and 
     ├── migration.ts                     // migration module
     ```
 ### Migration entries
-- ``migration.json`` provides all your migrations for your database. Every list must have one corresponding scripts with the same name i.e. : ``20250308150001_create_users.js`` will contains migration script for  ``20250308150001_create_users`` migration.
-  ```JSON
+- [`migration.json`](migrations/migration.json) provides all your migrations for your database. Every list must have one corresponding file with the same name i.e. : `20250308150001_create_users.js` will contains migration scripts for `20250308150001_create_users` migration.
+  ```JAVASCRIPT
   // migrations/migration.json
   
   [
@@ -198,18 +211,80 @@ This package contains DB migration for Basic ACL tables. Provides migration and 
   export default CreateUsers
   ```
 - Class Properties
-  - ``tableInit``
+  - `tableInit`
   
-    This property will be your initial table name. During runtime will be prefixed with provided ``prefix`` from app Connection page
-  - ``upSql``
+    This property will be your initial table name. During runtime it will be prefixed with provided `prefix` from app Connection page
+  - `upSql`
     
-    This string will be executed during ``migration``, remember to use ``:tablename`` for your migration table instead of the real table name, as this will be replaced with ``prefix+tableInit``
-  - ``downSql``
+    This string will be executed during `migration`.
+  - `downSql`
     
-    This string will be executed during ``rollback``, remember to use ``:tablename`` for your migration table instead of the real table name, as this will be replaced with ``prefix+tableInit``
-    
+    This string will be executed during `rollback`.
+
+> [!TIP] 
+> Using `:tablename` keyword\
+> Remember to use the string `:tablename` for your migration script table name, instead of the real table name, as this will be replaced with `prefix+tableInit`
+
+### Use `migrate:make` command
+This command will helps you to make a pair of a migration entry and a javascript file.
+- Syntax
+  ```BASH
+  yarn migrate:make [action] [table]
+  ```
+  - `[action]`
+  
+    As a best practice we can use the word `create` for this argument.
+  - `[table]`
+   
+    It is recommended to use the `snake_case` form for this argument.  
+- Example:
+  ```BASH
+  yarn migrate:make create my_table_names
+  ```
+  - `console.log` result:
+    ```BASH
+    [
+      '---------',
+      [
+        'Added new migration entry:',
+        '20250413153917_create_my_table_names'
+      ],
+     '---------'
+    ]
+    [
+     '---------',
+     [
+       'Added new migration script:',
+       'migrations/20250413153917_create_my_table_names.js'
+     ],
+     '---------'
+    ]
+    ```
+
+## App Theme
+This package utilize the theme support from DaisyUI. [Learn more](https://daisyui.com/docs/themes/)
+- Use predefined `corporate` theme
+  ```HTML
+  <!-- file index.html -->
+  <!doctype html>
+    <html lang="en" data-theme="corporate">
+      <head>
+      ....
+   </html>
+  ```
+  Put your theme name as the value of the `data-theme` attribute e.g. `<html data-theme="your-theme" ...>`
+- You need to active the theme support. See [`src/app/index.css`](src/app/index.css)
+  ```CSS
+  @import "tailwindcss";
+
+  @plugin "daisyui" {
+    themes: all;
+  }
+  ```
+
 ## Using Production DB
-Some migration operations are destructive, which means they may cause you to lose data. Use with concern against your production database.
+> [!CAUTION]
+> Some migration operations are destructive, which means they may cause you to lose data. Use with concern against your production database.
 
 ## Submit issue 
 
