@@ -4,13 +4,13 @@ class CreateRoles {
     static type = 'create'
 
     static upSql = 'CREATE TABLE `:tablename` (\n' +
-        '  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n' +
-        '  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n' +
-        '  `created_at` timestamp NULL DEFAULT NULL,\n' +
-        '  `updated_at` timestamp NULL DEFAULT NULL,\n' +
-        '  `deleted_at` timestamp NULL DEFAULT NULL,\n' +
+        '  `id` CHAR(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n' +
+        '  `name` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n' +
+        '  `created_at` TIMESTAMP NULL DEFAULT NULL,\n' +
+        '  `updated_at` TIMESTAMP NULL DEFAULT NULL,\n' +
+        '  `deleted_at` TIMESTAMP NULL DEFAULT NULL,\n' +
         '  PRIMARY KEY (`id`),\n' +
-        '  UNIQUE KEY `roles_name_unique` (`name`)\n' +
+        '  UNIQUE KEY `:tablename_name_unique` (`name`)\n' +
         ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
 
     static downSql = " DROP TABLE :tablename "

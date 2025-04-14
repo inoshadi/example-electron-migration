@@ -4,13 +4,22 @@ import { inspect } from "node:util"
 import { getAuthSequalize, getAuthAppUid } from './Auth.service'
 import { v4 as uuidv4 } from 'uuid'
 import EncryptLib from '../libraries/Encrypt.lib'
+var authSequelize: any
+var appDbSequelize: any
 
 const require = createRequire(import.meta.url)
 const { Sequelize, QueryTypes } = require('sequelize')
 
 export async function getAppSequelize(win: Electron.BrowserWindow) {
 
-    var authSequelize = await getAuthSequalize(win)
+    if (authSequelize === undefined) {
+        authSequelize = await getAuthSequalize(win)
+    }
+    if (appDbSequelize !== undefined) {
+        return appDbSequelize
+    }
+
+
     const instanceId = getAuthAppUid()
     const results = await authSequelize.query('SELECT * FROM connections WHERE app_id=:app_id', {
 
@@ -22,15 +31,16 @@ export async function getAppSequelize(win: Electron.BrowserWindow) {
     const row = results[0]
     const encryptLib = new EncryptLib()
     const dbpass = encryptLib.decrypt(row.pass, import.meta.env.VITE_APP_KEY)
-    const appSequelize = new Sequelize({
+    appDbSequelize = new Sequelize({
         dialect: row.driver,
         host: row.host,
         username: row.user,
         password: dbpass,
         database: row.database,
         port: parseInt(row.port),
+        logging: false,
     })
-    return appSequelize
+    return appDbSequelize
 }
 
 export default function AppdbService(win: Electron.BrowserWindow) {
@@ -113,7 +123,9 @@ export default function AppdbService(win: Electron.BrowserWindow) {
         win.webContents.send('console-log-message', ["Success make connection.", "At: " + new Date()])
 
         try {
-            var authSequelize = await getAuthSequalize(win)
+            if (typeof authSequelize === undefined) {
+                authSequelize = await getAuthSequalize(win)
+            }
         } catch (error) {
             console.log(error)
             win.webContents.send('console-log-message', inspect(error))

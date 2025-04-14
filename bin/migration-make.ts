@@ -22,6 +22,8 @@ const tableVar: string = '<![TABLE]>'
 const actionVar: string = '<![ACTION]>'
 const useSyntax: string = "yarn migrate:make [action] [table]"
 const useExam: string = "yarn migrate:make create my_table_name"
+const defaultUuid = '`id` CHAR(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci'
+const defaultNoUuid = '`id` INT UNSIGNED AUTO_INCREMENT'
 
 console.log(MakeLogs(["Make migration example:", "Syntax: " + useSyntax, "Example: " + useExam]))
 
@@ -62,14 +64,25 @@ const jsfnPath: string = mgrDir + jsFn + ".js"
 jsContent = jsContent.replaceAll(fnVar, jsfnPath).replaceAll(classVar, className).replaceAll(actionVar, actionName).replaceAll(tableVar, tableName)
 
 let dryRun: boolean = false
+let useUuid: boolean = true
 if (process.argv.length > 4) {
     for (let i = 4; i < process.argv.length; i++) {
         if (process.argv[i] == '--dry') {
             dryRun = true
         }
+        if (process.argv[i] == '--no-uuid') {
+            useUuid = false
+        }
     }
 }
 
+if (useUuid) {
+    console.log(MakeLogs(["UUID invoked:", "Migration entry:", jsfnPath]))
+    jsContent = jsContent.replaceAll(defaultNoUuid, defaultUuid)
+} else {
+    console.log(MakeLogs(["No UUID invoked:", "Migration entry:", jsfnPath]))
+    jsContent = jsContent.replaceAll(defaultUuid, defaultNoUuid)
+}
 
 if (dryRun) {
     console.log(MakeLogs(["Dry run invoked:", "Migration entry:", jsfnPath]))
@@ -77,6 +90,8 @@ if (dryRun) {
     console.log(MakeLogs(["Console end."]))
     process.exit()
 }
+
+
 // -------
 
 // read migration.json
