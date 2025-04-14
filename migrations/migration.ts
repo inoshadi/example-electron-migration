@@ -220,21 +220,22 @@ class Migration {
                 msg.push(sql)
                 await mods[i].up()
                 msg.push("........Done.")
+                msg.push('Add entries for ' + mgr + "...")
+                try {
+                    await this.setMigration(mgr, mods[i].table, mods[i].action, batch)
+                    msg.push("........Done.")
+                } catch (error) {
+                    console.log(error)
+                    msg.push("-----ERROR!-----")
+                    msg.push(inspect(error))
+                }
                 // console.log(mods)
             } catch (error) {
                 console.log(error)
                 msg.push("-----ERROR!-----")
                 msg.push(inspect(error))
             }
-            msg.push('Add entries for ' + mgr + "...")
-            try {
-                await this.setMigration(mgr, mods[i].table, mods[i].action, batch)
-                msg.push("........Done.")
-            } catch (error) {
-                console.log(error)
-                msg.push("-----ERROR!-----")
-                msg.push(inspect(error))
-            }
+
         }
         // msg.push(mods)
         return msg

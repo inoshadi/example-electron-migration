@@ -267,6 +267,23 @@ This command will helps you to make a pair of a migration entry and a javascript
      '---------'
     ]
     ```
+#### Use `--no-uuid` option
+This argument will makes the script generate `id` field as `INT UNSIGNED AUTO_INCREMENT`
+- Usage example:
+  ```BASH
+  yarn migrate:make create autoincrement_tables --no-uuid
+  ```
+#### Use `--dry` option
+This argument will make the script display the migration script you created in your console window, no migrations files will be added or changed.
+- Usage example:
+  ```BASH
+  yarn migrate:make create my_tables --dry
+  ```
+- Usage example with `--no-uuid`:
+  ```BASH
+  yarn migrate:make create nouuid_tables --no-uuid --dry
+  ```
+
 
 ## App Theme
 This package utilize the theme support from DaisyUI. [Learn more](https://daisyui.com/docs/themes/)

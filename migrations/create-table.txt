@@ -6,15 +6,15 @@ class <![CLASS]> {
     static type = '<![ACTION]>'
 
     static upSql = 'CREATE TABLE `:tablename` (\n' +
-    '  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n' +
-    '  `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n' +
-    '  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n' +
-    '  `notes` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,\n' +
-    '  `created_at` timestamp NULL DEFAULT NULL,\n' +
-    '  `updated_at` timestamp NULL DEFAULT NULL,\n' +
-    '  `deleted_at` timestamp NULL DEFAULT NULL,\n' +
+    '  `id` CHAR(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n' +
+    '  `code` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n' +
+    '  `name` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\n' +
+    '  `notes` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,\n' +
+    '  `created_at` TIMESTAMP NULL DEFAULT NULL,\n' +
+    '  `updated_at` TIMESTAMP NULL DEFAULT NULL,\n' +
+    '  `deleted_at` TIMESTAMP NULL DEFAULT NULL,\n' +
     '  PRIMARY KEY (`id`),\n' +
-    '  UNIQUE KEY `<![TABLE]>_code_unique` (`code`)\n' +
+    '  UNIQUE KEY `:tablename_code_unique` (`code`)\n' +
     ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
 
     static downSql = " DROP TABLE :tablename "
