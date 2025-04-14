@@ -1,4 +1,6 @@
 import crypto from 'node:crypto'
+
+// reference: https://stackoverflow.com/a/6953606
 export default class EncryptLib {
     public ivsep: string = ':'
     protected algorithm: string = 'aes-256-cbc'
@@ -37,24 +39,9 @@ export default class EncryptLib {
 
     public decrypt = (encrypted: string, key: string) => {
         const [ivhex, text] = this.parseText(encrypted)
-        console.log(ivhex, text)
         const iv = Buffer.from(ivhex, 'hex')
         const keySynced = this.scryptSync(key, ivhex)
         const decipher = this.getDecipher(keySynced, iv)
         return decipher.update(text, 'hex', 'utf8') + decipher.final('utf8')
     }
 }
-// var algorithm = 'aes-256-cbc'; // or any other algorithm supported by OpenSSL
-// var testkey = crypto.randomBytes(32).toString('hex')
-// var text = 'I love kittens'
-// var key = crypto.scryptSync(testkey, text, 32);
-// // var key = 'password';
-// const iv = crypto.randomBytes(16)
-// const ivhex = iv.toString('hex')
-// var cipher = crypto.createCipheriv(algorithm, key, iv);
-// var encrypted = cipher.update(text, 'utf8', 'hex') + cipher.final('hex');
-// var decipher = crypto.createDecipheriv(algorithm, key, iv);
-// var decrypted = decipher.update(encrypted, 'hex', 'utf8') + decipher.final('utf8');
-
-// const ivhexfrombin = Buffer.from(ivhex, 'hex')
-// console.log(decrypted, text, encrypted, ivhex, ivhexfrombin.toString('hex'))

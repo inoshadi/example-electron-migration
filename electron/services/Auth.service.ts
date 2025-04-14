@@ -7,6 +7,7 @@ import fs from 'node:fs'
 import { createRequire } from 'node:module'
 import EncryptLib from '../libraries/Encrypt.lib'
 const require = createRequire(import.meta.url)
+var authSequelize: any
 
 const { Sequelize, DataTypes, QueryTypes } = require('sequelize')
 
@@ -182,10 +183,15 @@ export async function setAuthConnection(sequelize: any, win: Electron.BrowserWin
 }
 
 export async function getAuthSequalize(win: Electron.BrowserWindow) {
+
+    if (authSequelize !== undefined) {
+        return authSequelize
+    }
     const sqlitefn = path.join(getAuthLcStorage(), import.meta.env.VITE_SQLITE)
     let sequelize = new Sequelize({
         dialect: "sqlite",
         storage: sqlitefn,
+        logging: false,
     })
     try {
         await sequelize.authenticate();
@@ -201,7 +207,8 @@ export async function getAuthSequalize(win: Electron.BrowserWindow) {
         console.error('Unable to connect to the database:', error)
         return false
     }
-    return sequelize
+    authSequelize = sequelize
+    return authSequelize
 
 }
 
