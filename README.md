@@ -2,12 +2,18 @@
 Use Case: Migrate ACL Tables
 
 ## About
-This package contains DB migration for Basic ACL tables. Provides migration and rollback features.
+This package contains DB migration for Basic ACL tables. Provides migration and rollback features.  
 
-Created based on [Electron Vite](https://electron-vite.github.io/) you may want to [See Electron Vite Generated Readme](ELECTRON_VITE_README.md).  
-Use React, [read documentation here](https://react.dev/reference/react),  
-Tailwindcss [read about Tailwindcss](https://tailwindcss.com/docs/),  
-and DaisyUI [learn more](https://daisyui.com/docs/intro/)  
+Created based on [Electron Vite](https://electron-vite.github.io/), you may want to see [Electron Vite Generated Readme](ELECTRON_VITE_README.md).  
+
+### Further Reading
+
+Use React, read the documentation [here](https://react.dev/reference/react).  
+Read about [Tailwindcss](https://tailwindcss.com/docs/).  
+Learn more about [DaisyUI](https://daisyui.com/docs/intro/).  
+Read about [Electron](https://www.electronjs.org/docs/latest/).  
+Download [Mysql](https://www.mysql.com/downloads/).  
+Introduction to [Sequlize v6](https://sequelize.org/docs/v6/).  
 
 ## What's inside
 ```JAVASCRIPT
@@ -55,10 +61,16 @@ and DaisyUI [learn more](https://daisyui.com/docs/intro/)
 ```
 
 ### Update Packages
+
 > [!NOTE]
-> This package uses the latest stable version of `sequelize` when the code was written, which is the `"sequelize": "^6.37.7"` version, read documentation [here](https://sequelize.org/docs/v6/).
+> This package uses the latest stable version of `sequelize` when the code was written, which is the `"sequelize": "^6.37.7"` version, read the documentation [here](https://sequelize.org/docs/v6/).
 
 ## Install
+
+> [!NOTE]
+> Assuming you have Node.js installed on your system, [Introduction to Node.Js](https://nodejs.org/en/learn/getting-started/introduction-to-nodejs).
+> We will use `yarn` as a package manager, [getting started with `yarn`](https://yarnpkg.com/getting-started).
+
 - Clone repository
   ```BASH
   git clone https://github.com/inoshadi/example-electron-migration.git
@@ -99,8 +111,8 @@ and DaisyUI [learn more](https://daisyui.com/docs/intro/)
 
 ## Build
 - ``yarn build``
-- This command will build a release package according to your machine
-- You can find your app installer within `release` directory
+- This command will build a release package according to your system.
+- You can find your app installer within `release` directory.
   - macOS
   - ``/release/[app-version]/${productName}-Mac-arm64-${version}-Installer.dmg``
   - ``/release/[app-version]/${productName}-Mac-x64-${version}-Installer.dmg``
@@ -118,9 +130,9 @@ and DaisyUI [learn more](https://daisyui.com/docs/intro/)
   - ``yarn build-linux``
 
 ## Available commands
-  ```BASH
+  ```JAVASCRIPT
   {
-  ...
+  // ...
     "scripts": {
       "dev": "vite",
       "build": "tsc && vite build && electron-builder",
@@ -134,13 +146,13 @@ and DaisyUI [learn more](https://daisyui.com/docs/intro/)
       "ts-node-import": "node --import 'data:text/javascript,import { register } from \"node:module\"; import { pathToFileURL } from \"node:url\"; register(\"ts-node/esm\", pathToFileURL(\"./\"));'"
   
     },
-  ...
+  // ...
   }
   ```
   
 ## Create your own migration scripts
 ### Migration path
-- All migration scripts stored at [`migrations/`](migrations) directory
+- All migration scripts are stored at the [`migrations/`](migrations) directory.
   ```
     migrations/
     ├── 20250308150001_create_users.js   // migration scripts
@@ -149,7 +161,7 @@ and DaisyUI [learn more](https://daisyui.com/docs/intro/)
     ├── migration.ts                     // migration module
     ```
 ### Migration entries
-- [`migration.json`](migrations/migration.json) provides all your migrations for your database. Every list must have one corresponding file with the same name i.e. : `20250308150001_create_users.js` will contains migration scripts for `20250308150001_create_users` migration.
+- [`migration.json`](migrations/migration.json) provides all your migrations for your database. Every list must have one corresponding file with the same name e.g. : `20250308150001_create_users.js` will contains migration scripts for `20250308150001_create_users` migration.
   ```JAVASCRIPT
   // migrations/migration.json
   
@@ -220,7 +232,7 @@ and DaisyUI [learn more](https://daisyui.com/docs/intro/)
 - Class Properties
   - `tableInit`
   
-    This property will be your initial table name. During runtime it will be prefixed with provided `prefix` from app Connection page
+    This property will be your initial table name. During runtime it will be prefixed with provided `prefix` from app Connection page, see [screenshot](#app-connection-page).
   - `upSql`
     
     This string will be executed during `migration`.
@@ -229,18 +241,18 @@ and DaisyUI [learn more](https://daisyui.com/docs/intro/)
     This string will be executed during `rollback`.
 
 > [!TIP] 
-> Using `:tablename` keyword\
-> Remember to use the string `:tablename` for your migration script table name, instead of the real table name, as this will be replaced with `prefix+tableInit`
+> Using `:tablename` keyword:\
+> Remember to use the string `:tablename` for your migration script table name, instead of the real table name, as this will be replaced with `prefix+tableInit`.
 
 ### Use `migrate:make` command
-This command will helps you to make a pair of a migration entry and a javascript file.
+This command helps you to create a migration entry and a JavaScript file.
 - Syntax
   ```BASH
   yarn migrate:make [action] [table]
   ```
   - `[action]`
   
-    As a best practice we can use the word `create` for this argument.
+    As a best practice, we can use the word `create` for this argument.
   - `[table]`
    
     It is recommended to use the `snake_case` form for this argument.  
@@ -248,7 +260,7 @@ This command will helps you to make a pair of a migration entry and a javascript
   ```BASH
   yarn migrate:make create my_table_names
   ```
-  - `console.log` result:
+  `console.log` result:
     ```BASH
     [
       '---------',
@@ -267,18 +279,26 @@ This command will helps you to make a pair of a migration entry and a javascript
      '---------'
     ]
     ```
+
 #### Use `--no-uuid` option
-This argument will makes the script generate `id` field as `INT UNSIGNED AUTO_INCREMENT`
+
+This argument will make the script generate the `id` field as `INT UNSIGNED AUTO_INCREMENT`. If you omit the argument it will be generated as UUID primary key by default.
+
 - Usage example:
+
   ```BASH
   yarn migrate:make create autoincrement_tables --no-uuid
   ```
+
 #### Use `--dry` option
-This argument will make the script display the migration script you created in your console window, no migrations files will be added or changed.
+
+This argument will make the script display the migration script you created in your console window, no migration files will be added or changed.
+
 - Usage example:
   ```BASH
   yarn migrate:make create my_tables --dry
   ```
+
 - Usage example with `--no-uuid`:
   ```BASH
   yarn migrate:make create nouuid_tables --no-uuid --dry
@@ -286,7 +306,9 @@ This argument will make the script display the migration script you created in y
 
 
 ## App Theme
-This package utilize the theme support from DaisyUI. [Learn more](https://daisyui.com/docs/themes/)
+
+This package utilizes the theme support from DaisyUI, [learn more](https://daisyui.com/docs/themes/).
+
 - Use built-in `corporate` theme
   ```HTML
   <!-- file index.html -->
@@ -296,8 +318,9 @@ This package utilize the theme support from DaisyUI. [Learn more](https://daisyu
       ....
    </html>
   ```
-  Put your theme name as the value of the `data-theme` attribute e.g. `<html data-theme="your-theme" ...>`
-- You need to activate the theme support. See [`src/app/index.css`](src/app/index.css)
+  Put your theme name as the value of the `data-theme` attribute e.g. `<html data-theme="your-theme" ...>`.
+
+- You need to activate the theme support. See [`src/app/index.css`](src/app/index.css).
   ```CSS
   @import "tailwindcss";
 
@@ -306,13 +329,30 @@ This package utilize the theme support from DaisyUI. [Learn more](https://daisyu
   }
   ```
 
+## App Screnshoots
+
+### App Connection Page
+![app connection page](https://hackmd.io/_uploads/SkGEbSsCyl.png)
+
+### App Main Page
+![app main page](https://hackmd.io/_uploads/Hk2KWroAJx.png)
+
+### App About Page
+![app about page](https://hackmd.io/_uploads/rkCezBjAkl.png)
+
+### App Manage Migration Page
+![app managet page top](https://hackmd.io/_uploads/ryefQHo01l.png)
+![app managet page bottom](https://hackmd.io/_uploads/SJCfQSi0Jx.png)
+
 ## Using Production DB
 > [!CAUTION]
-> Some migration operations are destructive, which means they may cause you to lose data. Use with concern against your production database.
+> Some migration operations are destructive, which means they may cause you to lose data. Use with caution against your production database.
 
 ## Submit issue 
 
+
 ## Contributing
+
 - Fork this repository
 - Chekout into your branch
   ```
